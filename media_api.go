@@ -1,6 +1,7 @@
 package workwx
 
 import (
+	"bytes"
 	"strconv"
 	"time"
 )
@@ -130,4 +131,14 @@ func (c *WorkwxApp) UploadPermanentImageMedia(media *Media) (url string, err err
 	}
 
 	return url, nil
+}
+
+func (c *WorkwxApp) GetTempMedia(media string) (buf bytes.Buffer, err error) {
+	buf, err = c.execGetMedia(reqMediaGet{
+		MediaID: media,
+	})
+	if err != nil {
+		return buf, err
+	}
+	return buf, nil
 }

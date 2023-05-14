@@ -2,6 +2,8 @@
 
 package workwx
 
+import "bytes"
+
 // execGetAccessToken 获取access_token
 func (c *WorkwxApp) execGetAccessToken(req reqAccessToken) (respAccessToken, error) {
 	var resp respAccessToken
@@ -697,6 +699,18 @@ func (c *WorkwxApp) execAddMsgTemplate(req reqAddMsgTemplateExternalContact) (re
 	}
 	if bizErr := resp.TryIntoErr(); bizErr != nil {
 		return respAddMsgTemplateExternalContact{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execGetMedia 获取配置了客户联系功能的成员列表
+func (c *WorkwxApp) execGetMedia(req reqMediaGet) (bytes.Buffer, error) {
+	var resp bytes.Buffer
+
+	err := c.executeQyapiMediaGet("/cgi-bin/media/get", req, &resp, true)
+	if err != nil {
+		return resp, err
 	}
 
 	return resp, nil

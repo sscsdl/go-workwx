@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"mime/multipart"
 	"net/url"
 	"sync"
@@ -178,6 +179,31 @@ func (c *WorkwxApp) executeQyapiMediaUpload(
 
 	decoder := json.NewDecoder(resp.Body)
 	err = decoder.Decode(respObj)
+	if err != nil {
+		// TODO: error_chain
+		return err
+	}
+
+	return nil
+}
+
+func (c *WorkwxApp) executeQyapiMediaGet(
+	path string,
+	req urlValuer,
+	respObj interface{},
+	withAccessToken bool,
+) error {
+	url := c.composeQyapiURLWithToken(path, req, withAccessToken)
+	urlStr := url.String()
+
+	resp, err := c.opts.HTTP.Get(urlStr)
+	if err != nil {
+		// TODO: error_chain
+		return err
+	}
+	defer resp.Body.Close()
+
+	respObj, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
 		// TODO: error_chain
 		return err

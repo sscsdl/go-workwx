@@ -361,6 +361,21 @@ func (x reqExternalContactList) intoURLValues() url.Values {
 	}
 }
 
+// reqMediaGet 临时素材获取请求
+type reqMediaGet struct {
+	MediaID string
+}
+
+func (x reqMediaGet) intoURLValues() url.Values {
+	return url.Values{
+		"media_id": {x.MediaID},
+	}
+}
+
+func (x reqMediaGet) getMediaID() string {
+	return x.MediaID
+}
+
 // respExternalContactList 获取客户列表
 type respExternalContactList struct {
 	respCommon
