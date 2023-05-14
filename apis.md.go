@@ -704,8 +704,7 @@ func (c *WorkwxApp) execAddMsgTemplate(req reqAddMsgTemplateExternalContact) (re
 
 // execGetMedia 获取配置了客户联系功能的成员列表
 func (c *WorkwxApp) execGetMedia(req reqMediaGet) ([]byte, error) {
-	var resp []byte
-	err := c.executeQyapiBytesGet("/cgi-bin/media/get", req, resp, true)
+	resp, err := c.executeQyapiBytesGet("/cgi-bin/media/get", req, true)
 	if err != nil {
 		return resp, err
 	}
