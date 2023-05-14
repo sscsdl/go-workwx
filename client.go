@@ -187,10 +187,10 @@ func (c *WorkwxApp) executeQyapiMediaUpload(
 	return nil
 }
 
-func (c *WorkwxApp) executeQyapiMediaGet(
+func (c *WorkwxApp) executeQyapiBytesGet(
 	path string,
 	req urlValuer,
-	respObj interface{},
+	respBytes []byte,
 	withAccessToken bool,
 ) error {
 	url := c.composeQyapiURLWithToken(path, req, withAccessToken)
@@ -203,7 +203,7 @@ func (c *WorkwxApp) executeQyapiMediaGet(
 	}
 	defer resp.Body.Close()
 
-	respObj, err = ioutil.ReadAll(resp.Body)
+	respBytes, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
 		// TODO: error_chain
 		return err
