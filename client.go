@@ -190,24 +190,23 @@ func (c *WorkwxApp) executeQyapiMediaUpload(
 func (c *WorkwxApp) executeQyapiBytesGet(
 	path string,
 	req urlValuer,
-	respBytes []byte,
 	withAccessToken bool,
-) error {
+) ([]byte, error) {
 	url := c.composeQyapiURLWithToken(path, req, withAccessToken)
 	urlStr := url.String()
 
 	resp, err := c.opts.HTTP.Get(urlStr)
 	if err != nil {
 		// TODO: error_chain
-		return err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
-	respBytes, err = ioutil.ReadAll(resp.Body)
+	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		// TODO: error_chain
-		return err
+		return nil, err
 	}
 
-	return nil
+	return respBytes, nil
 }

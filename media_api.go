@@ -132,9 +132,9 @@ func (c *WorkwxApp) UploadPermanentImageMedia(media *Media) (url string, err err
 	return url, nil
 }
 
-func (c *WorkwxApp) GetTempMedia(media string) (buf []byte, err error) {
+func (c *WorkwxApp) GetTempMedia(mediaID string) (buf []byte, err error) {
 	buf, err = c.execGetMedia(reqMediaGet{
-		MediaID: media,
+		MediaID: mediaID,
 	})
 	if err != nil {
 		return buf, err
